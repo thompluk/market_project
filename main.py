@@ -27,6 +27,7 @@ while selected != 5:
         for i in range(len(products)):
             print(f"{i:<7}| {products[i][0]:<10}| Rp.{products[i][1]:<15,}| {products[i][2]}")
         input()
+        os.system('cls')
     elif selected == 2:
         print("\nMenambah Buah\n")
         nama = input("Masukan Nama Buah: ")
@@ -38,6 +39,7 @@ while selected != 5:
         for i in range(len(products)):
             print(f"{i:<7}| {products[i][0]:<10}| {products[i][1]:<15,}| {products[i][2]}")
         input()
+        os.system('cls')
     elif selected == 3:
         print("\nMenghapus Buah\n")
         print("\nDaftar Buah\n")
@@ -54,6 +56,7 @@ while selected != 5:
         for i in range(len(products)):
             print(f"{i:<7}| {products[i][0]:<10}| {products[i][1]:<15,}| {products[i][2]}")
         input()
+        os.system('cls')
     elif selected == 4:
         price_per_product = []
         qty_per_product = []
@@ -92,6 +95,8 @@ while selected != 5:
             if (selisih):
                 print(f"\nUang kembalian anda: Rp.{selisih:,}")
 
+        input()
+        os.system('cls')
     elif selected == 5:
         print("Terima Kasih !")
         break
