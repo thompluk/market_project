@@ -9,48 +9,91 @@ products = [
     ["Anggur", 20_000, 10]
 ]
 
-# Menu Input QTY
-qty_apple = int(input("Masukan Jumlah Apel: "))
-while qty_apple >products[0[2]]:
-    print(f"Jumlah yang dimasukkan terlalu banyak !")
-    print(f"Stock Apel Tinggal: {products[0][2]}")
-    qty_apple = int(input("Masukan Jumlah Apel: "))
-qty_orange = int(input("Masukan Jumlah Jeruk: ")) 
-while qty_orange > products[1][2]:
-    print(f"Jumlah yang dimasukkan terlalu banyak !")
-    print(f"Stock Jeruk Tinggal: {products[1][2]}")
-    qty_orange = int(input("Masukan Jumlah Jeruk: "))
-qty_grape = int(input("Masukan Jumla Anggur: "))
-while qty_grape > products[2][2]:
-    print(f"Jumlah yang dimasukkan terlalu banyak !")
-    print(f"Stock Anggur Tinggal: {products[2][2]}")
-    qty_grape = int(input("Masukan Jumlah Anggur: "))
+selected = None
 
-#Perhitungan
-total_apple = qty_apple*products[0][1]
-total_orange = qty_orange*products[2][1]
-total_grape = qty_grape*products[3][1]
-grand_total = total_apple + total_orange + total_grape
+while selected != 5:
+    print("Selamat Datang di Pasar Buah")
+    print("\nList Menu")
+    print("1. Daftar Buah")
+    print("2. Menambah Buah")
+    print("3. Menghapus Buah")
+    print("4. Membeli Buah")
+    print("5. Exit Program")
+    selected = int(input("Masukan angka Menu yang ingin dijalankan: "))
 
-# Menu Detail Belanja
-print("\nDetail Belanja\n")
-print (f"Apel   : {qty_apple} x Rp.{products[0][1]:,} = Rp.{total_apple:,}")
-print (f"Jeruk  : {qty_orange} x Rp.{products[1][1]:,} = Rp.{total_orange:,}")
-print (f"Anggur : {qty_grape} x Rp.{products[2][1]:,} = Rp.{total_grape:,}")
-print (f"\nTotal  : Rp.{grand_total:,}\n")
+    if selected == 1:
+        print("\nDaftar Buah\n")
+        print(f"{"Index":<7}| {"Nama":<10}| {"Harga":<18}| {"Stok"}")
+        for i in range(len(products)):
+            print(f"{i:<7}| {products[i][0]:<10}| Rp.{products[i][1]:<15,}| {products[i][2]}")
+        input()
+    elif selected == 2:
+        print("\nMenambah Buah\n")
+        nama = input("Masukan Nama Buah: ")
+        harga = int(input("Masukan Harga Buah: "))
+        stok = int(input("Masukan Stok Buah: "))
+        products.append([nama, harga, stok])
+        print("\nDaftar Buah\n")
+        print(f"{"Index":<7}| {"Nama":<10}| {"Harga":<15}| {"Stok"}")
+        for i in range(len(products)):
+            print(f"{i:<7}| {products[i][0]:<10}| {products[i][1]:<15,}| {products[i][2]}")
+        input()
+    elif selected == 3:
+        print("\nMenghapus Buah\n")
+        print("\nDaftar Buah\n")
+        print(f"{"Index":<7}| {"Nama":<10}| {"Harga":<15}| {"Stok"}")
+        for i in range(len(products)):
+            print(f"{i:<7}| {products[i][0]:<10}| {products[i][1]:<15,}| {products[i][2]}")
+        index = int(input("Masukan index buah yang ingin dihapus: "))
+        while index > len(products)-1:
+            print("Index tidak tersedia !")
+            index = int(input("Masukan index buah yang ingin dihapus: "))
+        products.pop(index)
+        print("\nDaftar Buah\n")
+        print(f"{"Index":<7}| {"Nama":<10}| {"Harga":<15}| {"Stok"}")
+        for i in range(len(products)):
+            print(f"{i:<7}| {products[i][0]:<10}| {products[i][1]:<15,}| {products[i][2]}")
+        input()
+    elif selected == 4:
+        price_per_product = []
+        qty_per_product = []
+        grand_total = 0
 
+        for i in products:
+            qty = int(input(f"Masukan Jumlah {i[0]}: "))
+            while qty > i[2]:
+                print(f"Jumlah yang dimasukkan terlalu banyak !")
+                print(f"Stock {i[0]} Tinggal: {i[2]}")
+                qty = int(input(f"Masukan Jumlah {i[0]}: "))
+            price  = qty * i[1]
 
-#Payment Feature 
-print ("-"*10)
+            price_per_product.append(price)
+            qty_per_product.append(qty)
+            grand_total += price
 
-payment = int(input("Masukan Jumlah Uang: "))
-selisih = payment - grand_total
-while selisih < 0:
-    print("\n[X] Tansaksi dibatalkan !")
-    print(f"Uang kurang sebesar Rp.{abs(selisih):,}")
-    payment = int(input("\nMasukan Jumlah Uang: "))
-    selisih = payment - grand_total
-else:
-    print("\nTerima Kasih !")
-    if (selisih):
-        print(f"\nUang kembalian anda: Rp.{selisih:,}")
+        for i in range(len(products)):
+            print(f"{products[i][0]} : {qty_per_product[i]} x Rp.{products[i][1]:,} = Rp.{price_per_product[i]:,}")
+        print(f"\nTotal : Rp.{grand_total:,}\n")   
+
+        #Payment Feature 
+        print ("-"*10)
+
+        payment = int(input("Masukan Jumlah Uang: "))
+        selisih = payment - grand_total
+        while selisih < 0:
+            print("\n[X] Tansaksi dibatalkan !")
+            print(f"Uang kurang sebesar Rp.{abs(selisih):,}")
+            payment = int(input("\nMasukan Jumlah Uang: "))
+            selisih = payment - grand_total
+        else:
+            for i in range(len(products)):
+                products[i][2] -= qty_per_product[i]
+            print("\nTerima Kasih !")
+            if (selisih):
+                print(f"\nUang kembalian anda: Rp.{selisih:,}")
+
+    elif selected == 5:
+        print("Terima Kasih !")
+        break
+    else:
+        print("Pilihan tidak tersedia !")
